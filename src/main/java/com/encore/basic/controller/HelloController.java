@@ -1,8 +1,12 @@
 package com.encore.basic.controller;
 
+import com.encore.basic.domain.Hello;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 // @RestController -> 모든 경우에 @ResponseBody를 붙여주는 효과
@@ -18,7 +22,11 @@ public class HelloController {
 //    1) 아래처럼 String을 리턴하는 method인 경우, string을 그대로 리턴한다.
 //    2) 객체를 리턴하는 method인 경우, json을 리턴한다.
 
-    @GetMapping("string")
+//    -------------------------------------------------------
+//    1. GET 요청
+//    String 을 리턴한다
+        @GetMapping("string")
+//    @RequestMapping(value = "string", method = RequestMethod.GET)
     @ResponseBody
 //    Controller에서는 method 선언의 의미가 없음
 //    사용자와 interaction은 url로 하기 때문에
@@ -26,17 +34,29 @@ public class HelloController {
     public String helloString() {
         return "hello_string";
     }
+
+//    -------------------------------------------------------
+//    2. GET 요청
+//    json 을 리턴한다.
+//    ex) {"name":sinae, "email":xxx}
     @GetMapping("json")
     @ResponseBody
-    public String helloJson() {
-        return "hello_string";
+    public Hello helloJson() {
+        Hello hello = new Hello();
+        hello.setName("sinae");
+        hello.setEmail("sinae@naver.com");
+        hello.setPassword("1234");
+        System.out.println(hello);
+        return hello;
     }
 
+//    -------------------------------------------------------
+//    3. GET 요청
+//    html 을 리턴한다.
     @GetMapping("screen")
     public String helloScreen() {
         return "screen";
     }
-
 
 //        사용자가 넘긴 데이터 받는 방식 2가지
 //        1) parameter 방식 : ?{key}={value}
@@ -45,6 +65,9 @@ public class HelloController {
 //        (url을 통해 자원의 구조를 명확하게 표현할 수 있기 때문에 더 RESTful API 디자인에 적합하다!)
 //        ex) localhost:8080/member/1
 
+//    -------------------------------------------------------
+//    4. GET 요청
+//
     @GetMapping("screen-model-param")
 //    1) parameter 호출 방식
 //    ?name=honggildong의 방식으로 호출
@@ -63,4 +86,81 @@ public class HelloController {
         return "screen";
     }
 
+    //    Form태그로 x-www 데이터 처리
+//    form 태그 입력을 위한 화면을 사용자에게 전달
+    @GetMapping("form-screen")
+    public String formScreenMethod() {
+        return "form_screen";
+    }
+
+    //    방법1.
+    @PostMapping("/form-post-handle1")
+    @ResponseBody
+//    Form 태그를 통한 body 데이터 형태가 {key1}={value1}&{key2}={value2} 형식임
+    public String formPostHandle1(@RequestParam(value = "name") String name,
+                                  @RequestParam(value = "email") String email,
+                                  @RequestParam(value = "password") String password) {
+//        System.out.println(name);
+//        System.out.println(email);
+//        System.out.println(password);
+        return "정상처리";
+    }
+
+    //    방법2.
+    @PostMapping("/form-post-handle2")
+    @ResponseBody
+//    Spring에서 Hello 클래스의 인스턴스를 자동 mapping해서 생성
+//    <form>-data 형식 즉, x-www-url 인코딩 형식의 경우 사용
+//    이를 data binding 이라고 함! (Hello 클래스에는 Setter 필수)
+//    (DTO를 통해서 받겠다) : 사용자와의 최접접, 사용자와 데이터를 주고받는 곳
+//    엔티티에서는 setter 설정 안 하고 DTO에서만 설정을 한다 ..?
+    public String formPostHandle2(Hello hello) {
+        System.out.println(hello);
+        return "정상처리";
+    }
+
+    //    json 데이터 처리
+    @GetMapping("json-screen")
+    public String jsonScreen() {
+        return "json_screen";
+    }
+
+    //    방법1.
+    @PostMapping("/json-post-handle1")
+    @ResponseBody
+//    @RequestBody는 json으로 post 요청이 들어왔을 경우, body에서 data를 꺼내기 위해 사용
+    public String jsonPostHandle1(@RequestBody Map<String, String> body) {
+        System.out.println(body.get("name"));
+        System.out.println(body.get("email"));
+        System.out.println(body.get("password"));
+
+
+        Hello hello = new Hello();
+        hello.setName((body.get("name")));
+        hello.setEmail((body.get("email")));
+        hello.setPassword((body.get("password")));
+        return "ok";
+    }
+
+    //    방법2.
+    @PostMapping("/json-post-handle2")
+    @ResponseBody
+    public String jsonPostHandle2(@RequestBody JsonNode body) {
+        Hello hello = new Hello();
+        hello.setName((body.get("name").asText()));
+        hello.setEmail((body.get("email").asText()));
+        hello.setPassword((body.get("password").asText()));
+        return "ok";
+    }
+
+    //    방법3.
+    @PostMapping("/json-post-handle3")
+    @ResponseBody
+    public String jsonPostHandle3(@RequestBody Hello hello) {
+        System.out.println(hello);
+        System.out.println(hello.getName());
+        System.out.println(hello.getEmail());
+        System.out.println(hello.getPassword());
+        return "ok";
+    }
 }
