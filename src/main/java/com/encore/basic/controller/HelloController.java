@@ -57,6 +57,7 @@ public class HelloController {
     public String helloScreen() {
         return "screen";
     }
+//    -------------------------------------------------------
 
 //        사용자가 넘긴 데이터 받는 방식 2가지
 //        1) parameter 방식 : ?{key}={value}
@@ -65,9 +66,7 @@ public class HelloController {
 //        (url을 통해 자원의 구조를 명확하게 표현할 수 있기 때문에 더 RESTful API 디자인에 적합하다!)
 //        ex) localhost:8080/member/1
 
-//    -------------------------------------------------------
 //    4. GET 요청
-//
     @GetMapping("screen-model-param")
 //    1) parameter 호출 방식
 //    ?name=honggildong의 방식으로 호출
