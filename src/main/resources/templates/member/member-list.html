@@ -1,37 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Member List Page</title>
+
 </head>
 <body>
-<h2>회원 목록 조회</h2>
-<table style="border-collapse: collapse">
+<div th:replace="member/header :: headerFragment"></div>
+<table>
     <thead>
     <tr>
         <th>Name</th>
         <th>Email</th>
         <th>Password</th>
     </tr>
-
     </thead>
-    <tbody>
-    <tr>
-        <td>Sinae</td>
-        <td>sinae@naver.com</td>
-        <td>1234</td>
+    <tr th:each="memberResDto : ${memberList}">
+        <td th:text="${memberResDto.name}"></td>
+        <td th:text="${memberResDto.email}"></td>
+        <!--        member?id=xx 방식으로 요청-->
+        <!--        @는 th의 링크 url 표현식-->
+        <td><a th:href="@{/member/find(id=${memberResDto.id})}">상세보기</a></td>
     </tr>
-    <tr>
-        <td>Mike</td>
-        <td>mike@google.com</td>
-        <td>5678</td>
-    </tr>
-    <tr>
-        <td>Sam</td>
-        <td>sam@yahoo.com</td>
-        <td>1357</td>
-    </tr>
-    </tbody>
 </table>
 
 </body>

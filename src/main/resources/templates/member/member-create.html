@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create Member Page</title>
 </head>
 <body>
-<h2>회원가입 페이지</h2>
-<form action="member/create" method="post">
-
+<div th:replace="member/header :: headerFragment"></div>
+<form action="create" method="post">
+    <p>
+        Name <input type="text" name="name">
+    </p>
+    <p>
+        Email <input type="text" name="email"><br>
+    </p>
+    <p>
+        Password <input type="text" name="password"><br>
+    </p>
+    <p>
+        <input type="submit" value="SUBMIT">
+    </p>
 </form>
 </body>
 </html>
