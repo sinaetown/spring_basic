@@ -33,7 +33,7 @@ public class MemberService {
         List<Member> members = memberRepository.members();
         List<MemberResponseDto> memberResponseDtos = new ArrayList<>();
         for (Member m : members) {
-            MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(), m.getPassword());
+            MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(), m.getPassword(), m.getCreated_time());
 //            memberResponseDto.setName(m.getName());
 //            memberResponseDto.setEmail(m.getEmail());
 //            memberResponseDto.setPassword(m.getPassword());
@@ -50,9 +50,9 @@ public class MemberService {
         memberRepository.createMember(member);
     }
 
-    public MemberResponseDto findOne(int id) {
-        Member m = memberRepository.findOne(id);
-        MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(), m.getPassword());
+    public MemberResponseDto findById(int id) {
+        Member m = memberRepository.findById(id);
+        MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(), m.getPassword(), m.getCreated_time());
         return memberResponseDto;
     }
 }

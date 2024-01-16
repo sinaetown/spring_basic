@@ -1,7 +1,6 @@
 package com.encore.basic.repository;
 
 import com.encore.basic.domain.Member;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -28,14 +27,12 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public  Member findOne(int id) {
-        Member answer = null;
+    public  Member findById(int id) {
         for (Member m : memberDB) {
             if (m.getId() == id) {
-                answer = m;
-                break;
+              return m;
             }
         }
-        return answer;
+        return null;
     }
 }

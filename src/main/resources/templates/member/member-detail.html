@@ -7,13 +7,16 @@
 <body>
 <h1>상세보기</h1>
 <p>
-  Name : <span th:text="${member.name}"></span>
+    Name : <span th:text="${member.name}"></span>
 </p>
 <p>
     Email : <span th:text="${member.email}"></span>
 </p>
 <p>
     Password : <span th:text="${member.password}"></span>
+</p>
+<p>
+    Created Date&Time : <span th:text="${member.created_time}"></span>
 </p>
 </body>
 </html>

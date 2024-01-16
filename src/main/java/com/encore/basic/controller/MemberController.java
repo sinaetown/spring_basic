@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MemberController {
 //    의존성 주입 (Dependency Injection) 방법 #1 : 필드 주입 방식
 //    @Autowired // automatic dependency injection
-//    private MemberService memberService; //여기서는 final 사용 불가 -> 새엇ㅇ자가 없어서 초기화가 안 됨
+//    private MemberService memberService; //여기서는 final 사용 불가 -> 생성자가 없어서 초기화가 안 됨
 
 //    의존성 주입 (Dependency Injection) 방법 #2 : 생성자 주입 방식, 가장 많이 사용됨
 //    장점 :
@@ -65,7 +65,7 @@ public class MemberController {
 
     @GetMapping("member/find")
     public String findMember(@RequestParam(value = "id") int id, Model model) {
-        model.addAttribute("member", memberService.findOne(id));
+        model.addAttribute("member", memberService.findById(id));
         return "member/member-detail";
     }
 

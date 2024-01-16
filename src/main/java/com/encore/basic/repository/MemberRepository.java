@@ -9,5 +9,5 @@ public interface MemberRepository {
 
     public void createMember(Member member);
 
-    public Member findOne(int id);
+    public Member findById(int id);
 }
