@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.NoSuchElementException;
+
 @Controller
 //@RequiredArgsConstructor
 //Spring Bean이란 스프링이 생성하고 관리하는 객체를 의미
@@ -48,7 +50,7 @@ public class MemberController {
     @GetMapping("members")
 //    야야~ 머하냐~
     public String showMembers(Model model) {
-        model.addAttribute("memberList", memberService.members());
+        model.addAttribute("memberList", memberService.findAll());
         return "member/member-list";
     }
 
@@ -58,15 +60,20 @@ public class MemberController {
     }
 
     @PostMapping("member/create")
-    public String createMember(MemberRequestDto memberRequestDto) {
-        memberService.createMember(memberRequestDto);
+    public String save(MemberRequestDto memberRequestDto) {
+        memberService.save(memberRequestDto);
         return "redirect:/members"; //url 리다이렉트
     }
 
     @GetMapping("member/find")
     public String findMember(@RequestParam(value = "id") int id, Model model) {
-        model.addAttribute("member", memberService.findById(id));
-        return "member/member-detail";
+        try{
+            model.addAttribute("member", memberService.findById(id));
+            return "member/member-detail";
+        }
+        catch(NoSuchElementException e){
+            return "member/404-error-page";
+        }
     }
 
 }

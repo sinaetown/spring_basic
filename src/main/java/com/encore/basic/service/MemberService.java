@@ -3,6 +3,7 @@ package com.encore.basic.service;
 import com.encore.basic.domain.Member;
 import com.encore.basic.domain.MemberRequestDto;
 import com.encore.basic.domain.MemberResponseDto;
+import com.encore.basic.repository.JdbcMemberRepository;
 import com.encore.basic.repository.MemberRepository;
 import com.encore.basic.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 //service 어노테이션을 통해 싱글톤 컴포넌트로 생성 -> Spring Bean으로 등록
 @Service
@@ -23,17 +26,16 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Autowired
-    public MemberService(MemoryMemberRepository memoryMemberRepository) {
-        this.memberRepository = memoryMemberRepository;
+    public MemberService(JdbcMemberRepository jdbcMemberRepository) {
+        this.memberRepository = jdbcMemberRepository;
     }
 
-    static int total_id;
-
-    public List<MemberResponseDto> members() {
-        List<Member> members = memberRepository.members();
+    public List<MemberResponseDto> findAll() {
+        List<Member> members = memberRepository.findAll();
         List<MemberResponseDto> memberResponseDtos = new ArrayList<>();
         for (Member m : members) {
-            MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(), m.getPassword(), m.getCreated_time());
+            MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(),
+                    m.getEmail(), m.getPassword(), m.getCreated_time());
 //            memberResponseDto.setName(m.getName());
 //            memberResponseDto.setEmail(m.getEmail());
 //            memberResponseDto.setPassword(m.getPassword());
@@ -42,17 +44,17 @@ public class MemberService {
         return memberResponseDtos;
     }
 
-    public void createMember(MemberRequestDto memberRequestDto) {
-        LocalDateTime now = LocalDateTime.now();
-        total_id++;
-        Member member = new Member(total_id, memberRequestDto.getName(),
-                memberRequestDto.getEmail(), memberRequestDto.getPassword(), now);
-        memberRepository.createMember(member);
+    public void save(MemberRequestDto memberRequestDto) {
+        Member member = new Member(memberRequestDto.getName(),
+                memberRequestDto.getEmail(), memberRequestDto.getPassword());
+        memberRepository.save(member);
     }
 
-    public MemberResponseDto findById(int id) {
-        Member m = memberRepository.findById(id);
-        MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(), m.getPassword(), m.getCreated_time());
+    public MemberResponseDto findById(int id) throws NoSuchElementException {
+        Member m = memberRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(),
+                m.getPassword(), m.getCreated_time());
         return memberResponseDto;
+
     }
 }

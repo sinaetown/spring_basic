@@ -31,6 +31,9 @@ dependencies {
 //    Getter, Setter 및 로그 관련 의존성
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+//    DB연결을 위한 의존성 : jdbc, mariadb 클라이언트
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
 }
 
 tasks.named('test') {

@@ -3,11 +3,12 @@ package com.encore.basic.repository;
 import com.encore.basic.domain.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository {
-    public List<Member> members();
+    public List<Member> findAll();
 
-    public void createMember(Member member);
+    public Member save(Member member);
 
-    public Member findById(int id);
+    public Optional<Member> findById(int id);
 }

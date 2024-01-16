@@ -1,19 +1,27 @@
 package com.encore.basic.domain;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 //보통 Getter만 사용
 @Getter
-@AllArgsConstructor //모든 매개변수를 넣은 생성자 (기본 생성자 없어짐)
+//@AllArgsConstructor //모든 매개변수를 넣은 생성자 (기본 생성자 없어짐)
 //@NoArgsConstructor -> 기본 생성자 만들어줌
 public class Member {
+    @Setter //column 단위로 setter 설정 가능은 함 !
     private int id;
     private String name;
     private String email;
     private String password;
+    @Setter
     private LocalDateTime created_time;
+
+    public Member(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }
