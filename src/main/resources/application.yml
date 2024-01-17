@@ -10,7 +10,7 @@ spring:
     database-platform: org.hibernate.dialect.MariaDBDialect
 #    스키마는 사전 생성 필요
     generate-ddl: true
-    hibernate:
+    hibernate: #jpa는 인터페이스, hibernate는 jpa의 구현체
 #      create 옵션은 매번 table을 drop 후 생성한다
 #      update 옵션은 변경사항만 alter를 적용한다
 #      validate는 실제DB와의 차이만을 체크한다
@@ -18,6 +18,9 @@ spring:
       ddl-auto: create
 #      jpa가 자동으로 query를 실행할 때 query가 console창에 보여지도록
     show-sql: true
+
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
 
 #application.properties? ??
 #server.port = 8081

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -40,15 +41,12 @@ public class MemberController {
 //    초기화되지 않은 final 필드를 대상으로 생성자 생성
 //    다형성 구현 불가, final 이라는 키워드를 쓰는 것밖에 장점이 없음
 
-//    private final MemberService memberService;
-
     @GetMapping("/")
     public String goHome() {
         return "member/header";
     }
 
     @GetMapping("members")
-//    야야~ 머하냐~
     public String showMembers(Model model) {
         model.addAttribute("memberList", memberService.findAll());
         return "member/member-list";
@@ -71,7 +69,7 @@ public class MemberController {
             model.addAttribute("member", memberService.findById(id));
             return "member/member-detail";
         }
-        catch(NoSuchElementException e){
+        catch(EntityNotFoundException e){
             return "member/404-error-page";
         }
     }

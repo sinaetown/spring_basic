@@ -7,6 +7,8 @@ import com.encore.basic.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.Optional;
 @Service
 //Spring Bean이란 스프링이 생성하고 관리하는 객체를 의미
 //제어의 역전 (Inversion of Control) -> IOC 컨테이너가 Spring Bean을 관리 (빈 생성, 의존성 주입)
+@Transactional
 public class MemberService {
 //    @Autowired // automatic dependency injection
 //    private MemoryMemberRepository memoryMemberRepository;
@@ -24,8 +27,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Autowired
-    public MemberService(MybatisMemberRepository mybatisMemberRepository) {
-        this.memberRepository = mybatisMemberRepository;
+    public MemberService(JpaMemberRepository jpaMemberRepository) {
+        this.memberRepository = jpaMemberRepository;
     }
 
     public List<MemberResponseDto> findAll() {
@@ -48,11 +51,10 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public MemberResponseDto findById(int id) throws NoSuchElementException {
-        Member m = memberRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    public MemberResponseDto findById(int id) throws EntityNotFoundException {
+        Member m = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(),
                 m.getPassword(), m.getCreated_time());
         return memberResponseDto;
-
     }
 }
