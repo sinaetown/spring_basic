@@ -26,9 +26,11 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     //    String은 DB의 varchar로 변환
+    @Setter
     private String name;
     @Column(nullable = false, length = 50) //name 옵션을 통해 DB의 칼럼명 별도 지정 가능
     private String email;
+    @Setter
     private String password;
     @Setter
     @Column(name = "create_time")
@@ -40,6 +42,11 @@ public class Member {
     public Member(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
+    }
+
+    public void update(String name, String password) {
+        this.name = name;
         this.password = password;
     }
 }

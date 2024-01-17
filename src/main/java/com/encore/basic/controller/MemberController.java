@@ -1,6 +1,8 @@
 package com.encore.basic.controller;
 
+import com.encore.basic.domain.Member;
 import com.encore.basic.domain.MemberRequestDto;
+import com.encore.basic.domain.MemberResponseDto;
 import com.encore.basic.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -23,7 +24,7 @@ public class MemberController {
 //    @Autowired // automatic dependency injection
 //    private MemberService memberService; //여기서는 final 사용 불가 -> 생성자가 없어서 초기화가 안 됨
 
-//    의존성 주입 (Dependency Injection) 방법 #2 : 생성자 주입 방식, 가장 많이 사용됨
+    //    의존성 주입 (Dependency Injection) 방법 #2 : 생성자 주입 방식, 가장 많이 사용됨
 //    장점 :
 //    1) final을 통해 상수로 사용 가능 -> 변수의 안정성을 높일 수 있음
 //    2) 다형성 구현 가능
@@ -59,19 +60,38 @@ public class MemberController {
 
     @PostMapping("member/create")
     public String save(MemberRequestDto memberRequestDto) {
+//        Transaction 테스트
+//        try {
+//            memberService.save(memberRequestDto);
+//            return "redirect:/members"; //url 리다이렉트
+//        } catch (IllegalArgumentException e) {
+//            return "member/404-error-page";
+//        }
+
         memberService.save(memberRequestDto);
         return "redirect:/members"; //url 리다이렉트
     }
 
     @GetMapping("member/find")
     public String findMember(@RequestParam(value = "id") int id, Model model) {
-        try{
+        try {
             model.addAttribute("member", memberService.findById(id));
             return "member/member-detail";
-        }
-        catch(EntityNotFoundException e){
+        } catch (NoSuchElementException e) {
             return "member/404-error-page";
         }
+    }
+
+    @GetMapping("member/delete")
+    public String deleteMember(@RequestParam(value = "id") int id) {
+        memberService.delete(id);
+        return "redirect:/members";
+    }
+
+    @PostMapping("member/update")
+    public String updateMember(MemberRequestDto memberRequestDto) {
+        memberService.update(memberRequestDto);
+        return "redirect:/member/find?id=" + memberRequestDto.getId();
     }
 
 }

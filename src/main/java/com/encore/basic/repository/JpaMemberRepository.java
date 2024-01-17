@@ -33,7 +33,7 @@ public class JpaMemberRepository implements MemberRepository {
     public Member save(Member member) {
 //        persist : 전달된 entity(여기서는 Member)가
 //        EntityManager의 관리 상태가 되도록 만들어주고
-//        트랜잭션이 커밋될 때 DB에 저장 (insert, update 포함)
+//        트랜잭션이 커밋될 때 DB에 저장
         entityManager.persist(member);
         return member;
     }
@@ -52,4 +52,11 @@ public class JpaMemberRepository implements MemberRepository {
 //                "where m.name= :name", Member.class).setParameter("name", name).getResultList();
 //        return members;
 //    }
+
+    @Override
+    public void delete(Member member) {
+//        remove메서드 사용
+//        update의 경우 merge메서드 사용
+
+    }
 }
