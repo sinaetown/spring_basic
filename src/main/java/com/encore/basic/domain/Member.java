@@ -28,12 +28,12 @@ public class Member {
     //    String은 DB의 varchar로 변환
     @Setter
     private String name;
-    @Column(nullable = false, length = 50) //name 옵션을 통해 DB의 칼럼명 별도 지정 가능
+    @Column(nullable = false, length = 50)
     private String email;
     @Setter
     private String password;
     @Setter
-    @Column(name = "create_time")
+    @Column(name = "create_time")  //name 옵션을 통해 DB의 칼럼명 별도 지정 가능
     @CreationTimestamp
     private LocalDateTime created_time;
     @UpdateTimestamp

@@ -65,7 +65,7 @@ public class MemberService {
     }
 
     public MemberResponseDto findById(int id) throws EntityNotFoundException {
-        Member m = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Member m = memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("검색하신 ID의 Member가 존재하지 않습니다!"));
         MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(),
                 m.getPassword(), m.getCreated_time());
         return memberResponseDto;

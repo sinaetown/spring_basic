@@ -22,10 +22,10 @@ public class HelloController {
 //    1) 아래처럼 String을 리턴하는 method인 경우, string을 그대로 리턴한다.
 //    2) 객체를 리턴하는 method인 경우, json을 리턴한다.
 
-//    -------------------------------------------------------
+    //    -------------------------------------------------------
 //    1. GET 요청
 //    String 을 리턴한다
-        @GetMapping("string")
+    @GetMapping("string")
 //    @RequestMapping(value = "string", method = RequestMethod.GET)
     @ResponseBody
 //    Controller에서는 method 선언의 의미가 없음
@@ -35,7 +35,7 @@ public class HelloController {
         return "hello_string";
     }
 
-//    -------------------------------------------------------
+    //    -------------------------------------------------------
 //    2. GET 요청
 //    json 을 리턴한다.
 //    ex) {"name":sinae, "email":xxx}
@@ -50,7 +50,7 @@ public class HelloController {
         return hello;
     }
 
-//    -------------------------------------------------------
+    //    -------------------------------------------------------
 //    3. GET 요청
 //    html 을 리턴한다.
     @GetMapping("screen")
@@ -66,7 +66,7 @@ public class HelloController {
 //        (url을 통해 자원의 구조를 명확하게 표현할 수 있기 때문에 더 RESTful API 디자인에 적합하다!)
 //        ex) localhost:8080/member/1
 
-//    4. GET 요청
+    //    4. GET 요청
     @GetMapping("screen-model-param")
 //    1) parameter 호출 방식
 //    ?name=honggildong의 방식으로 호출

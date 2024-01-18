@@ -6,7 +6,7 @@ spring:
     password: 1234
   jpa:
     database: mysql
-    #    InnoDB engine 사용 설정
+    #    innoDB engine 사용 설정
     database-platform: org.hibernate.dialect.MariaDBDialect
     #    스키마는 사전 생성 필요
     generate-ddl: true

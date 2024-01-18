@@ -91,7 +91,7 @@ public class MemberController {
     @PostMapping("member/update")
     public String updateMember(MemberRequestDto memberRequestDto) {
         memberService.update(memberRequestDto);
-        return "redirect:/member/find?id=" + memberRequestDto.getId();
+        return "redirect:/member/find?id=" + memberRequestDto.getId(); //redirect는 웹 브라우저에서 한 것!
     }
 
 }
