@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller
-// @RestController -> 모든 경우에 @ResponseBody를 붙여주는 효과
 // 모든 요청에 @ResponseBody를 붙이고 싶다면 @RestController 사용한다.
 
 @RequestMapping("hello")
@@ -181,7 +180,6 @@ public class HelloController {
 
         return "ok";
     }
-
 
 //        Controller와 jsp의 조합 (그 전에는 Controller와 Thymeleaf의 조합)
     @GetMapping("/hello-servlet-jsp-get")
