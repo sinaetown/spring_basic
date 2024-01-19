@@ -4,6 +4,7 @@ import com.encore.basic.domain.Member;
 import com.encore.basic.domain.MemberRequestDto;
 import com.encore.basic.domain.MemberResponseDto;
 import com.encore.basic.service.MemberService;
+import io.swagger.annotations.Api;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+@Api(tags = "회원관리서비스")
 @RestController
 //@RestController 사용 시, @ResponseBody 안 붙여도 됨
 @RequestMapping("/rest")

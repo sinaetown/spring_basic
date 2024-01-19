@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller
@@ -161,5 +162,31 @@ public class HelloController {
         System.out.println(hello.getEmail());
         System.out.println(hello.getPassword());
         return "ok";
+    }
+
+    @PostMapping("httpservlet")
+    @ResponseBody
+    public String httpServletTest(HttpServletRequest httpServletRequest) {
+//        HttpServletRequest 객체에서 header정보 추출
+        System.out.println(httpServletRequest.getContentType());
+        System.out.println(httpServletRequest.getMethod());
+//        session : 로그인 (auth) 정보에서 필요한 정보값을 추출할 때 많이 사용
+        System.out.println(httpServletRequest.getSession());
+        System.out.println(httpServletRequest.getHeader("Accept"));
+
+//        HttpServletRequest 객체에서 body정보 추출
+//        httpServletRequest.getReader()를 통해 BufferedReader로 받아 직접 파싱
+        System.out.println(httpServletRequest.getParameter("test1"));
+        System.out.println(httpServletRequest.getParameter("test2"));
+
+        return "ok";
+    }
+
+
+//        Controller와 jsp의 조합 (그 전에는 Controller와 Thymeleaf의 조합)
+    @GetMapping("/hello-servlet-jsp-get")
+    public String helloServletJspGet(Model model) {
+        model.addAttribute("myData", "jsp test data");
+        return "hello-jsp";
     }
 }
