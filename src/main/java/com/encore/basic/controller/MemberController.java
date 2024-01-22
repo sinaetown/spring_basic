@@ -2,16 +2,13 @@ package com.encore.basic.controller;
 
 import com.encore.basic.domain.Member;
 import com.encore.basic.domain.MemberRequestDto;
-import com.encore.basic.domain.MemberResponseDto;
 import com.encore.basic.service.MemberService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.NoSuchElementException;
 
