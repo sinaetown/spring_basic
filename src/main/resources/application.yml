@@ -25,7 +25,7 @@ spring:
     #      jpa가 자동으로 query를 실행할 때 query가 console창에 보여지도록
     show-sql: true
   #    springboot2.4 이상에서는 기본적으로 PathPatternParser를 사용하고 있는데,
-  #    이는 이전 버전과 다른 경로 매칭 규칙을 가지고 있어, springfox와 같은 일부 라이브러리에서는 문제 발생
+  #    이는 이전 버전과 다른 경로 매칭 규칙을 가지고 있어, springfox와 같은 일부 라이브러리에서는 문제 발생 -> Swagger 설정 때문에 추가
   #  http://localhost:8080/swagger-ui/
   mvc:
     pathmatch:

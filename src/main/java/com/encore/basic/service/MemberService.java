@@ -20,8 +20,6 @@ import java.util.Optional;
 //Spring Bean이란 스프링이 생성하고 관리하는 객체를 의미
 //제어의 역전 (Inversion of Control) -> IOC 컨테이너가 Spring Bean을 관리 (빈 생성, 의존성 주입)
 @Service
-
-
 public class MemberService {
 //    @Autowired // automatic dependency injection
 //    private MemoryMemberRepository memoryMemberRepository;
@@ -64,6 +62,7 @@ public class MemberService {
 //        }
     }
 
+//    여기서 예외처리를 하면 transaction 처리하기 용이
     public MemberResponseDto findById(int id) throws EntityNotFoundException {
         Member m = memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("검색하신 ID의 Member가 존재하지 않습니다!"));
         MemberResponseDto memberResponseDto = new MemberResponseDto(m.getId(), m.getName(), m.getEmail(),
@@ -76,6 +75,7 @@ public class MemberService {
         memberRepository.delete(m);
     }
 
+//    PK값이 있으면 업데이트, 없으면 신규추가
     public void update(MemberRequestDto memberRequestDto) {
         Member m = memberRepository.findById(memberRequestDto.getId()).orElseThrow(EntityNotFoundException::new);
         m.update(memberRequestDto.getName(), memberRequestDto.getPassword());

@@ -31,6 +31,8 @@ public class MemberRestController {
     }
 
     @PostMapping("member/create")
+//    @ResponseStatus(HttpStatus.CREATED) -> 이게 없으면 상태갑 200을 주게 됨
+//    반대로 있으면 상태값 201 (조금 더 명확)을 주게 됨
     public String save(@RequestBody MemberRequestDto memberRequestDto) {
         memberService.save(memberRequestDto);
         return "ok";

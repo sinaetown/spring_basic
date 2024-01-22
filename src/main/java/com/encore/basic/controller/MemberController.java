@@ -41,13 +41,13 @@ public class MemberController {
 //    @RequiredArgsConstructor : @NonNull 어노테이션이 붙어있는 필드 또는
 //    초기화되지 않은 final 필드를 대상으로 생성자 생성
 //    다형성 구현 불가, final 이라는 키워드를 쓰는 것밖에 장점이 없음
-
     @GetMapping("/")
     public String goHome() {
         return "member/header";
     }
 
     @GetMapping("members")
+//    데이터가 너무 많아서 서버 터질 가능성 있음 -> paging / pagination 반드시 필요!
     public String showMembers(Model model) {
         model.addAttribute("memberList", memberService.findAll());
         return "member/member-list";
@@ -59,6 +59,7 @@ public class MemberController {
     }
 
     @PostMapping("member/create")
+//    여기서 객체를 parameter 방식으로 받음
     public String save(MemberRequestDto memberRequestDto) {
 //        Transaction 테스트
 //        try {
@@ -69,7 +70,8 @@ public class MemberController {
 //        }
 
         memberService.save(memberRequestDto);
-        return "redirect:/members"; //url 리다이렉트
+//        url 리다이렉트 -> 웹 브라우저한테 리다이렉트하라고 알려줌, location header에 해당 url을 302한테 전달
+        return "redirect:/members";
     }
 
     @GetMapping("member/find")
@@ -93,5 +95,4 @@ public class MemberController {
         memberService.update(memberRequestDto);
         return "redirect:/member/find?id=" + memberRequestDto.getId(); //redirect는 웹 브라우저에서 한 것!
     }
-
 }
